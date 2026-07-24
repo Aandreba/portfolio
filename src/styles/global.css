@@ -277,6 +277,9 @@ h1 span {
     border-radius: 14px;
     background: var(--surface);
     overflow: hidden;
+    height: -webkit-fill-available;
+    height: -moz-available;
+    height: stretch;
 }
 .viewport-topbar {
     display: flex;

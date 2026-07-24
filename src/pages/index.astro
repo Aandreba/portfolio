@@ -12,6 +12,7 @@ import BlazeVisual from "../components/visuals/BlazeVisual.astro";
 import NesmuVisual from "../components/visuals/NesmuVisual.astro";
 import { projects } from "../data/projects";
 import { talks } from "../data/talks";
+import AutoPlayVideo from "../components/AutoPlayVideo";
 
 // Maps each project's `name` to its side visual. Kept here (rather than in
 // data/projects.ts) since these are Astro components, not serializable data.
@@ -68,6 +69,10 @@ const projectVisuals: Record<string, any> = {
                     <strong>Talks</strong> FOSDEM · OpenSouthCode · DORS/CLUC
                 </div>
             </div>
+        </div>
+
+        <div class="viewport-wrap">
+            <AutoPlayVideo src="ray-portal.mov" />
         </div>
     </div>
 
