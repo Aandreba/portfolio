@@ -1,0 +1,198 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import SiteHeader from "../components/SiteHeader.tsx";
+import Viewport from "../components/Viewport.tsx";
+import ScrollSync from "../components/ScrollSync.tsx";
+import ProjectCard from "../components/ProjectCard.astro";
+import TalkItem from "../components/TalkItem.astro";
+import PortalVisual from "../components/visuals/PortalVisual.astro";
+import ZigrcVisual from "../components/visuals/ZigrcVisual.astro";
+import Wasm2spirvVisual from "../components/visuals/Wasm2spirvVisual.astro";
+import BlazeVisual from "../components/visuals/BlazeVisual.astro";
+import NesmuVisual from "../components/visuals/NesmuVisual.astro";
+import { projects } from "../data/projects";
+import { talks } from "../data/talks";
+
+// Maps each project's `name` to its side visual. Kept here (rather than in
+// data/projects.ts) since these are Astro components, not serializable data.
+const projectVisuals: Record<string, any> = {
+    "Portal Ray Tracer": PortalVisual,
+    zigrc: ZigrcVisual,
+    wasm2spirv: Wasm2spirvVisual,
+    blaze: BlazeVisual,
+    nesmu: NesmuVisual,
+};
+---
+
+<BaseLayout title="Alex Andreba — Systems & Graphics Programmer">
+    <SiteHeader client:load />
+    <ScrollSync client:load />
+
+    <div class="hero">
+        <div>
+            <div class="eyebrow">Systems &amp; Graphics Developer</div>
+            <h1>
+                Alex Andreba<br />
+            </h1>
+            <p class="hero-desc">
+                I build the low-level machinery between hardware and light
+                —&nbsp;
+                <b>ray tracers, compilers, and emulators</b> — working mostly in Rust,
+                Zig, WGSL and OpenCL. Right now that means a Vulkan/wgpu renderer
+                that traces light&nbsp;
+                <b>through portals</b>.
+            </p>
+            <div class="hero-cta">
+                <a
+                    class="btn btn-primary"
+                    href="https://github.com/Aandreba"
+                    target="_blank"
+                    rel="noopener"
+                >
+                    View GitHub →
+                </a>
+                <a class="btn btn-ghost" href="#talks">Watch the talks</a>
+                <a
+                    class="btn btn-ghost"
+                    href="https://www.linkedin.com/in/alex-andreba/"
+                    target="_blank"
+                    rel="noopener"
+                >
+                    Connect on LinkedIn
+                </a>
+            </div>
+            <div class="hero-meta">
+                <div><strong>Based in</strong> Catalonia, Spain</div>
+                <div><strong>Stack</strong> Rust · Zig · WGSL · Vulkan</div>
+                <div>
+                    <strong>Talks</strong> FOSDEM · OpenSouthCode · DORS/CLUC
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <section id="about">
+        <div class="section-head">
+            <h2 class="section-title">About Me</h2>
+        </div>
+        <div class="about-grid">
+            <div>
+                <p>
+                    I'm a <b>systems programmer and graphics developer</b> working
+                    across Rust, Zig, WGSL, WebAssembly and OpenCL, with a focus on
+                    GPU graphics and low-level systems. Most of my time goes into
+                    a Vulkan/wgpu ray tracing renderer with&nbsp;
+                    <b>recursive portal traversal</b>, cross-portal virtual
+                    point light (VPL) shadow testing, and deferred shading over
+                    G-buffers — which is also the theme of this page.
+                </p>
+                <p>
+                    Outside of the renderer, I maintain a handful of open-source
+                    tools spanning compilers, language runtimes and GPU tooling,
+                    and I've spoken internationally about emulation and hardware
+                    translation — most recently at <b>FOSDEM 2026</b> in Brussels.
+                </p>
+                <div class="focus-grid">
+                    <div class="focus-card">
+                        <div class="idx mono">FOCUS / 01</div>
+                        <h3>Ray tracing &amp; portals</h3>
+                        <p>
+                            Vulkan &amp; wgpu, acceleration structures, ray
+                            queries, cross-portal light transport.
+                        </p>
+                    </div>
+                    <div class="focus-card">
+                        <div class="idx mono">FOCUS / 02</div>
+                        <h3>Compilers &amp; bytecode</h3>
+                        <p>
+                            WebAssembly → SPIR-V, dynamic recompilation,
+                            instruction-set translation.
+                        </p>
+                    </div>
+                    <div class="focus-card">
+                        <div class="idx mono">FOCUS / 03</div>
+                        <h3>Low-level systems</h3>
+                        <p>
+                            Rust &amp; Zig runtime internals, FFI, memory
+                            models, GPU interop.
+                        </p>
+                    </div>
+                </div>
+            </div>
+            <div>
+                <div class="stack-title mono">TECH STACK</div>
+                <div class="stack-list mono">
+                    <span>Rust</span><span>Zig</span><span>WGSL</span><span
+                        >Vulkan</span
+                    >
+                    <span>wgpu</span><span>OpenCL</span><span>WebAssembly</span
+                    ><span>SPIR-V</span>
+                    <span>ash</span><span>C++</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="projects">
+        <div class="section-head">
+            <h2 class="section-title">Projects</h2>
+        </div>
+        <p class="section-sub">
+            Geometry first. The structures underneath everything else — from a
+            real-time portal renderer to compilers that retarget bytecode across
+            architectures.
+        </p>
+
+        {
+            projects.map((project) => {
+                const Visual = projectVisuals[project.name];
+                return (
+                    <ProjectCard project={project}>
+                        {Visual && <Visual slot="visual" />}
+                    </ProjectCard>
+                );
+            })
+        }
+    </section>
+
+    <section id="talks">
+        <div class="section-head">
+            <h2 class="section-title">Talks</h2>
+        </div>
+        <p class="section-sub">
+            Where the work reaches an audience — three talks on emulation and
+            hardware translation, given in chronological order across three
+            countries.
+        </p>
+        <div class="talk-line">
+            {talks.map((talk) => <TalkItem talk={talk} />)}
+        </div>
+    </section>
+
+    <footer>
+        <div class="f-left">
+            <h2>Let's talk shop.</h2>
+            <p>
+                Open to conversations about ray tracing, compilers, or the next
+                conference talk.
+            </p>
+        </div>
+        <div class="f-links">
+            <a
+                class="btn btn-ghost"
+                href="https://github.com/Aandreba"
+                target="_blank"
+                rel="noopener">GitHub ↗</a
+            >
+            <a
+                class="btn btn-ghost"
+                href="https://www.linkedin.com/in/alex-andreba/"
+                target="_blank"
+                rel="noopener">LinkedIn ↗</a
+            >
+        </div>
+        <div class="f-copyright">
+            <span>Alex Andreba — Catalonia, Spain</span>
+        </div>
+    </footer>
+</BaseLayout>

@@ -1,0 +1,47 @@
+---
+// Original animated illustration depicting GPGPU dispatch: a kernel
+// launches work items that light up across parallel compute lanes.
+---
+
+<svg viewBox="0 0 240 180" xmlns="http://www.w3.org/2000/svg" class="pv-blaze" role="img" aria-label="Animated illustration of an OpenCL kernel dispatching across GPU compute lanes">
+  <rect x="0" y="0" width="240" height="180" fill="#0e1119" />
+
+  <rect x="96" y="20" width="48" height="26" rx="6" fill="#191d27" stroke="#ff8a5b" stroke-width="2" />
+  <text x="120" y="37" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="9.5" fill="#ff8a5b">kernel</text>
+
+  <g stroke="#262b37" stroke-width="6" stroke-linecap="round">
+    <line x1="40" y1="70" x2="40" y2="150" />
+    <line x1="75" y1="70" x2="75" y2="150" />
+    <line x1="110" y1="70" x2="110" y2="150" />
+    <line x1="145" y1="70" x2="145" y2="150" />
+    <line x1="180" y1="70" x2="180" y2="150" />
+  </g>
+
+  <g stroke="#ffd166" stroke-width="6" stroke-linecap="round" stroke-dasharray="14 66">
+    <line x1="40" y1="70" x2="40" y2="150">
+      <animate attributeName="stroke-dashoffset" values="80;0" dur="1.6s" repeatCount="indefinite" begin="0s" />
+    </line>
+    <line x1="75" y1="70" x2="75" y2="150">
+      <animate attributeName="stroke-dashoffset" values="80;0" dur="1.6s" repeatCount="indefinite" begin="0.15s" />
+    </line>
+    <line x1="110" y1="70" x2="110" y2="150">
+      <animate attributeName="stroke-dashoffset" values="80;0" dur="1.6s" repeatCount="indefinite" begin="0.3s" />
+    </line>
+    <line x1="145" y1="70" x2="145" y2="150">
+      <animate attributeName="stroke-dashoffset" values="80;0" dur="1.6s" repeatCount="indefinite" begin="0.45s" />
+    </line>
+    <line x1="180" y1="70" x2="180" y2="150">
+      <animate attributeName="stroke-dashoffset" values="80;0" dur="1.6s" repeatCount="indefinite" begin="0.6s" />
+    </line>
+  </g>
+
+  <path d="M 120 46 L 120 58 M 108 58 L 132 58" stroke="#3a4150" stroke-width="2" fill="none" />
+</svg>
+
+<style>
+  .pv-blaze {
+    width: 100%;
+    height: 100%;
+    display: block;
+  }
+</style>

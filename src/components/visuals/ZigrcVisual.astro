@@ -1,0 +1,106 @@
+---
+// Original animated illustration depicting reference-counted ownership:
+// three "owner" boxes hold a shared count, retain/release pulses travel
+// along the connecting lines.
+---
+
+<svg
+  viewBox="0 0 240 180"
+  xmlns="http://www.w3.org/2000/svg"
+  class="pv-zigrc"
+  role="img"
+  aria-label="Animated illustration of reference-counted ownership"
+>
+  <rect x="0" y="0" width="240" height="180" fill="#0e1119"></rect>
+
+  <g stroke="#3a4150" stroke-width="2" fill="none">
+    <path d="M 56 40 L 120 90"></path>
+    <path d="M 56 140 L 120 90"></path>
+    <path d="M 184 90 L 120 90"></path>
+  </g>
+
+  <g stroke="#f7c667" stroke-width="2.5" fill="none" stroke-dasharray="5 7">
+    <path d="M 56 40 L 120 90" stroke-dashoffset="0">
+      <animate
+        attributeName="stroke-dashoffset"
+        values="0;-24"
+        dur="1.6s"
+        repeatCount="indefinite"></animate>
+    </path>
+    <path d="M 56 140 L 120 90">
+      <animate
+        attributeName="stroke-dashoffset"
+        values="0;-24"
+        dur="2s"
+        repeatCount="indefinite"></animate>
+    </path>
+    <path d="M 184 90 L 120 90">
+      <animate
+        attributeName="stroke-dashoffset"
+        values="0;-24"
+        dur="1.3s"
+        repeatCount="indefinite"></animate>
+    </path>
+  </g>
+
+  <g font-family="JetBrains Mono, monospace" font-size="10" fill="#8991a3">
+    <rect
+      x="30"
+      y="26"
+      width="52"
+      height="28"
+      rx="5"
+      fill="#191d27"
+      stroke="#262b37"></rect>
+    <text x="56" y="44" text-anchor="middle">owner</text>
+    <rect
+      x="30"
+      y="126"
+      width="52"
+      height="28"
+      rx="5"
+      fill="#191d27"
+      stroke="#262b37"></rect>
+    <text x="56" y="144" text-anchor="middle">owner</text>
+    <rect
+      x="158"
+      y="76"
+      width="52"
+      height="28"
+      rx="5"
+      fill="#191d27"
+      stroke="#262b37"></rect>
+    <text x="184" y="94" text-anchor="middle">owner</text>
+  </g>
+
+  <circle
+    cx="120"
+    cy="90"
+    r="26"
+    fill="#1a1440"
+    stroke="#8f6bff"
+    stroke-width="2.5"
+  >
+    <animate
+      attributeName="r"
+      values="26;28;26"
+      dur="1.4s"
+      repeatCount="indefinite"></animate>
+  </circle>
+  <text
+    x="120"
+    y="94"
+    text-anchor="middle"
+    font-family="JetBrains Mono, monospace"
+    font-size="12"
+    fill="#b98bff">rc: 3</text
+  >
+</svg>
+
+<style>
+  .pv-zigrc {
+    width: 100%;
+    height: 100%;
+    display: block;
+  }
+</style>

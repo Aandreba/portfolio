@@ -1,0 +1,44 @@
+---
+// Original animated illustration depicting dynamic recompilation: a
+// scanning beam passes over 6502 opcode blocks, translating them into
+// host machine code below.
+---
+
+<svg viewBox="0 0 240 180" xmlns="http://www.w3.org/2000/svg" class="pv-nesmu" role="img" aria-label="Animated illustration of NES 6502 opcodes being dynamically recompiled">
+  <rect x="0" y="0" width="240" height="180" fill="#0e1119" />
+
+  <g font-family="JetBrains Mono, monospace" font-size="9.5" fill="#8991a3">
+    <rect x="20" y="24" width="200" height="24" rx="4" fill="#191d27" stroke="#262b37" />
+    <text x="30" y="40">A9 00  LDA #$00</text>
+  </g>
+  <g font-family="JetBrains Mono, monospace" font-size="9.5" fill="#8991a3">
+    <rect x="20" y="54" width="200" height="24" rx="4" fill="#191d27" stroke="#262b37" />
+    <text x="30" y="70">8D 00 02  STA $0200</text>
+  </g>
+  <g font-family="JetBrains Mono, monospace" font-size="9.5" fill="#8991a3">
+    <rect x="20" y="84" width="200" height="24" rx="4" fill="#191d27" stroke="#262b37" />
+    <text x="30" y="100">E8  INX</text>
+  </g>
+
+  <g font-family="JetBrains Mono, monospace" font-size="9.5" fill="#ffd166" opacity="0.9">
+    <text x="30" y="130">mov eax, 0</text>
+    <text x="30" y="146">mov [0x0200], eax</text>
+    <text x="30" y="162">inc ecx</text>
+  </g>
+
+  <rect x="20" y="22" width="200" height="88" fill="none" stroke="none" />
+  <rect x="18" y="20" width="204" height="18" fill="#ffd166" opacity="0.18">
+    <animate attributeName="y" values="20;96;20" dur="3s" repeatCount="indefinite" />
+  </rect>
+  <rect x="18" y="20" width="204" height="2" fill="#ffd166">
+    <animate attributeName="y" values="20;96;20" dur="3s" repeatCount="indefinite" />
+  </rect>
+</svg>
+
+<style>
+  .pv-nesmu {
+    width: 100%;
+    height: 100%;
+    display: block;
+  }
+</style>
