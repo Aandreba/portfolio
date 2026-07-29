@@ -1,15 +1,14 @@
 ---
 import BaseLayout from "../layouts/BaseLayout.astro";
 import SiteHeader from "../components/SiteHeader.tsx";
-import Viewport from "../components/Viewport.tsx";
 import ScrollSync from "../components/ScrollSync.tsx";
 import ProjectCard from "../components/ProjectCard.astro";
 import TalkItem from "../components/TalkItem.astro";
-import PortalVisual from "../components/visuals/PortalVisual.astro";
+import PortalVisual from "../components/visuals/PortalVideo.astro";
 import ZigrcVisual from "../components/visuals/ZigrcVisual.astro";
 import Wasm2spirvVisual from "../components/visuals/Wasm2spirvVisual.astro";
 import BlazeVisual from "../components/visuals/BlazeVisual.astro";
-import NesmuVisual from "../components/visuals/NesmuVisual.astro";
+import NesmuVisual from "../components/visuals/NesmuVideo.astro";
 import { projects } from "../data/projects";
 import { talks } from "../data/talks";
 import AutoPlayVideo from "../components/AutoPlayVideo";
@@ -72,7 +71,7 @@ const projectVisuals: Record<string, any> = {
         </div>
 
         <div class="viewport-wrap">
-            <AutoPlayVideo src="ray-portal.mov" />
+            <AutoPlayVideo src="ray-portal.mov" client:load />
         </div>
     </div>
 

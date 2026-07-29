@@ -272,6 +272,7 @@ h1 span {
 
 /* ---------- viewport (signature element) ---------- */
 .viewport-wrap {
+    display: flex;
     position: relative;
     border: 1px solid var(--line);
     border-radius: 14px;
@@ -281,6 +282,11 @@ h1 span {
     height: -moz-available;
     height: stretch;
 }
+
+.viewport-wrap video {
+    height: 100%;
+}
+
 .viewport-topbar {
     display: flex;
     align-items: center;
@@ -760,4 +766,52 @@ footer .f-links {
     justify-content: space-between;
     flex-wrap: wrap;
     gap: 8px;
+}
+
+/* ExpandableVideo.css */
+.ev-thumb {
+    width: 100%;
+    max-width: 480px;
+    border-radius: 8px;
+    cursor: zoom-in;
+    display: block;
+}
+
+.ev-overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.85);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 1000;
+    animation: ev-fade-in 0.15s ease-out;
+}
+
+.ev-full {
+    max-width: 90vw;
+    max-height: 90vh;
+    border-radius: 8px;
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
+}
+
+.ev-close {
+    position: absolute;
+    top: 1.5rem;
+    right: 1.5rem;
+    background: none;
+    border: none;
+    color: white;
+    font-size: 1.5rem;
+    cursor: pointer;
+    line-height: 1;
+}
+
+@keyframes ev-fade-in {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
 }
