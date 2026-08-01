@@ -12,6 +12,7 @@ import NesmuVisual from "../components/visuals/NesmuVideo.astro";
 import { projects } from "../data/projects";
 import { talks } from "../data/talks";
 import AutoPlayVideo from "../components/AutoPlayVideo";
+import { getRepoStats } from "../lib/githubStars";
 
 // Maps each project's `name` to its side visual. Kept here (rather than in
 // data/projects.ts) since these are Astro components, not serializable data.
@@ -22,6 +23,25 @@ const projectVisuals: Record<string, any> = {
     blaze: BlazeVisual,
     nesmu: NesmuVisual,
 };
+
+// Live star/fork counts, fetched at build time (cached for a day — see
+// src/lib/githubStars.ts) and falling back to the hardcoded `stats` in
+// data/projects.ts if the API is unreachable.
+const GITHUB_REPO_URL = /^https:\/\/github\.com\/([^/]+)\/([^/]+)\/?$/;
+
+const displayedProjects = await Promise.all(
+    projects.map(async (project) => {
+        const match = project.href?.match(GITHUB_REPO_URL);
+        if (!match) return { project };
+
+        const [, owner, repo] = match;
+        const live = await getRepoStats(owner, repo);
+        if (!live) return { project };
+
+        const forks = live.forks === 1 ? "1 fork" : `${live.forks} forks`;
+        return { project, stats: `★ ${live.stars} · ${forks}` };
+    }),
+);
 ---
 
 <BaseLayout title="Alex Andreba — Systems & Graphics Programmer">
@@ -141,17 +161,12 @@ const projectVisuals: Record<string, any> = {
         <div class="section-head">
             <h2 class="section-title">Projects</h2>
         </div>
-        <p class="section-sub">
-            Geometry first. The structures underneath everything else — from a
-            real-time portal renderer to compilers that retarget bytecode across
-            architectures.
-        </p>
 
         {
-            projects.map((project) => {
+            displayedProjects.map(({ project, stats }) => {
                 const Visual = projectVisuals[project.name];
                 return (
-                    <ProjectCard project={project}>
+                    <ProjectCard project={project} stats={stats}>
                         {Visual && <Visual slot="visual" />}
                     </ProjectCard>
                 );
@@ -163,11 +178,6 @@ const projectVisuals: Record<string, any> = {
         <div class="section-head">
             <h2 class="section-title">Talks</h2>
         </div>
-        <p class="section-sub">
-            Where the work reaches an audience — three talks on emulation and
-            hardware translation, given in chronological order across three
-            countries.
-        </p>
         <div class="talk-line">
             {talks.map((talk) => <TalkItem talk={talk} />)}
         </div>

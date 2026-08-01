@@ -2,45 +2,48 @@
 import type { Project } from "../data/projects";
 
 interface Props {
-  project: Project;
+    project: Project;
+    stats?: string;
 }
 
-const { project } = Astro.props;
+const { project, stats } = Astro.props;
 ---
 
 <div class="project-card">
-  <div class="project-media" aria-hidden="true">
-    <slot name="visual" />
-  </div>
-
-  <div>
-    <div class="project-head">
-      <span class="project-name">{project.name}</span>
-      {
-        project.badge && (
-          <span class={`badge ${project.badge.flagship ? "flagship" : ""}`}>
-            {project.badge.text}
-          </span>
-        )
-      }
+    <div class="project-media" aria-hidden="true">
+        <slot name="visual" />
     </div>
-    <p class="project-desc">{project.description}</p>
-    <div class="project-tags mono">
-      {project.tags.map((tag) => <span>{tag}</span>)}
-    </div>
-  </div>
 
-  <div class="project-stats mono">
-    {project.stats}
-    {
-      project.href && (
-        <>
-          <br />
-          <a href={project.href} target="_blank" rel="noopener">
-            View repo →
-          </a>
-        </>
-      )
-    }
-  </div>
+    <div>
+        <div class="project-head">
+            <span class="project-name">{project.name}</span>
+            {
+                project.badge && (
+                    <span
+                        class={`badge ${project.badge.flagship ? "flagship" : ""}`}
+                    >
+                        {project.badge.text}
+                    </span>
+                )
+            }
+        </div>
+        <p class="project-desc">{project.description}</p>
+        <div class="project-tags mono">
+            {project.tags.map((tag) => <span>{tag}</span>)}
+        </div>
+    </div>
+
+    <div class="project-stats mono">
+        {stats}
+        {
+            project.href && (
+                <>
+                    <br />
+                    <a href={project.href} target="_blank" rel="noopener">
+                        View repo →
+                    </a>
+                </>
+            )
+        }
+    </div>
 </div>
