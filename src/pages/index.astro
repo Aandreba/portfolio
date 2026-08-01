@@ -170,16 +170,18 @@ const displayedProjects = [...pinned, ...rest];
             <h2 class="section-title">Projects</h2>
         </div>
 
-        {
-            displayedProjects.map(({ project, stats }) => {
-                const Visual = projectVisuals[project.name];
-                return (
-                    <ProjectCard project={project} stats={stats}>
-                        {Visual && <Visual slot="visual" />}
-                    </ProjectCard>
-                );
-            })
-        }
+        <div class="projects-grid">
+            {
+                displayedProjects.map(({ project, stats }) => {
+                    const Visual = projectVisuals[project.name];
+                    return (
+                        <ProjectCard project={project} stats={stats}>
+                            {Visual && <Visual slot="visual" />}
+                        </ProjectCard>
+                    );
+                })
+            }
+        </div>
     </section>
 
     <section id="talks">

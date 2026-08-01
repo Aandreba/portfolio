@@ -9,7 +9,7 @@ export type Project = {
 export const projects: Project[] = [
     {
         name: "Portal Ray Tracer",
-        badge: { text: "FLAGSHIP · IN PROGRESS", flagship: true },
+        badge: { text: "IN PROGRESS", flagship: true },
         description:
             "A real-time ray tracing renderer built on Vulkan and wgpu, supporting recursive traversal through portals.",
         tags: ["Rust", "wgpu", "WGSL", "Ray Tracing"],
