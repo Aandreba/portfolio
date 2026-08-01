@@ -5,6 +5,7 @@ import ScrollSync from "../components/ScrollSync.tsx";
 import ProjectCard from "../components/ProjectCard.astro";
 import TalkItem from "../components/TalkItem.astro";
 import PortalVisual from "../components/visuals/PortalVideo.astro";
+import VgiVisual from "../components/visuals/VgiVisual.astro";
 import ZigrcVisual from "../components/visuals/ZigrcVisual.astro";
 import Wasm2spirvVisual from "../components/visuals/Wasm2spirvVisual.astro";
 import BlazeVisual from "../components/visuals/BlazeVisual.astro";
@@ -18,30 +19,37 @@ import { getRepoStats } from "../lib/githubStars";
 // data/projects.ts) since these are Astro components, not serializable data.
 const projectVisuals: Record<string, any> = {
     "Portal Ray Tracer": PortalVisual,
+    vgi: VgiVisual,
     zigrc: ZigrcVisual,
     wasm2spirv: Wasm2spirvVisual,
     blaze: BlazeVisual,
     nesmu: NesmuVisual,
 };
 
-// Live star/fork counts, fetched at build time (cached for a day — see
-// src/lib/githubStars.ts) and falling back to the hardcoded `stats` in
-// data/projects.ts if the API is unreachable.
+// Live star counts, fetched at build time (cached for a day — see
+// src/lib/githubStars.ts). Also used to sort the project list, with the
+// flagship project pinned to the top regardless of star count.
 const GITHUB_REPO_URL = /^https:\/\/github\.com\/([^/]+)\/([^/]+)\/?$/;
 
-const displayedProjects = await Promise.all(
+const withStats = await Promise.all(
     projects.map(async (project) => {
         const match = project.href?.match(GITHUB_REPO_URL);
-        if (!match) return { project };
+        if (!match) return { project, stars: -1 };
 
         const [, owner, repo] = match;
         const live = await getRepoStats(owner, repo);
-        if (!live) return { project };
+        if (!live) return { project, stars: -1 };
 
         const forks = live.forks === 1 ? "1 fork" : `${live.forks} forks`;
-        return { project, stats: `★ ${live.stars} · ${forks}` };
+        return { project, stats: `★ ${live.stars} · ${forks}`, stars: live.stars };
     }),
 );
+
+const pinned = withStats.filter((p) => p.project.badge?.flagship);
+const rest = withStats
+    .filter((p) => !p.project.badge?.flagship)
+    .sort((a, b) => b.stars - a.stars);
+const displayedProjects = [...pinned, ...rest];
 ---
 
 <BaseLayout title="Alex Andreba — Systems & Graphics Programmer">
@@ -55,10 +63,13 @@ const displayedProjects = await Promise.all(
                 Alex Andreba<br />
             </h1>
             <p class="hero-desc">
-                I'm a <b>systems programmer and graphics developer</b>
-                working primarily in Rust, Zig, WGSL and OpenCL, with a
-                focus on <b>GPU pipelines, compilers, and emulators</b>
-                — the software layer closest to the hardware.
+                I'm a <b>systems programmer and graphics developer</b
+                >&nbsp;working primarily in Rust, Zig, WGSL and OpenCL, with a
+                focus on <b>GPU pipelines, compilers, and emulators</b>&nbsp;—
+                the software layer closest to the hardware. I'm drawn to
+                problems where performance and correctness are equally
+                non-negotiable, from real-time rendering to bytecode and
+                instruction-set translation.
             </p>
             <div class="hero-cta">
                 <a
@@ -103,15 +114,15 @@ const displayedProjects = await Promise.all(
                     I'm a <b>systems programmer and graphics developer</b> working
                     across Rust, Zig, WGSL, WebAssembly and OpenCL. My work sits at
                     the boundary between hardware and higher-level code —&nbsp;
-                    <b>GPU pipelines, compilers, and instruction sets</b> — the
-                    kind of layer where correctness and performance both matter
-                    and neither can be an afterthought.
+                    <b>GPU pipelines, compilers, and instruction sets</b> — the kind
+                    of layer where correctness and performance both matter and neither
+                    can be an afterthought.
                 </p>
                 <p>
                     I maintain a handful of open-source tools spanning graphics,
-                    compilers, language runtimes and GPU tooling, and I've spoken
-                    internationally about emulation and hardware translation —
-                    most recently at <b>FOSDEM 2026</b> in Brussels.
+                    compilers, language runtimes and GPU tooling, and I've
+                    spoken internationally about emulation and hardware
+                    translation — most recently at <b>FOSDEM 2026</b> in Brussels.
                 </p>
                 <div class="focus-grid">
                     <div class="focus-card">

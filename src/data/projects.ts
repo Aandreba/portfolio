@@ -15,6 +15,13 @@ export const projects: Project[] = [
         tags: ["Rust", "wgpu", "WGSL", "Ray Tracing"],
     },
     {
+        name: "vgi",
+        description:
+            "A C++20 library and engine framework for Vulkan applications — device setup, windowing, and an extensible system/layer architecture for the main loop.",
+        tags: ["C++", "Vulkan", "Engine"],
+        href: "https://github.com/Aandreba/vgi",
+    },
+    {
         name: "zigrc",
         description:
             "Reference-counted pointers for Zig, inspired by Rust's Rc and Arc.",
