@@ -542,9 +542,9 @@ section {
 /* PROJECTS */
 .project-card {
     display: grid;
-    grid-template-columns: 220px 1fr auto;
-    gap: 28px;
-    padding: 30px 0;
+    grid-template-columns: 110px 1fr;
+    gap: 18px;
+    padding: 16px 0;
     border-top: 1px solid var(--line-soft);
     align-items: start;
 }
@@ -555,7 +555,7 @@ section {
     width: 100%;
     aspect-ratio: 4 / 3;
     border: 1px solid var(--line);
-    border-radius: 10px;
+    border-radius: 8px;
     overflow: hidden;
     background: var(--surface-2);
 }
@@ -566,11 +566,6 @@ section {
     height: 100%;
     display: block;
     object-fit: cover;
-}
-@media (max-width: 900px) {
-    .project-card {
-        grid-template-columns: 160px 1fr auto;
-    }
 }
 @media (max-width: 640px) {
     .project-card {
@@ -587,10 +582,10 @@ section {
     align-items: center;
     gap: 12px;
     flex-wrap: wrap;
-    margin-bottom: 10px;
+    margin-bottom: 5px;
 }
 .project-name {
-    font-size: 19px;
+    font-size: 16px;
     font-weight: 600;
 }
 .badge {
@@ -609,11 +604,44 @@ section {
 }
 .project-desc {
     color: var(--text-dim);
-    font-size: 14.5px;
-    line-height: 1.65;
+    font-size: 13px;
+    line-height: 1.6;
     max-width: 62ch;
-    margin: 0 0 12px;
+    margin: 0;
 }
+
+/* Tags, stats and the repo link are tucked away by default and only
+   revealed on hover/focus, keeping each row compact. Devices without a
+   real pointer (touch) can't hover, so they always see this content —
+   otherwise the repo link would be unreachable. */
+.project-reveal {
+    display: grid;
+    grid-template-rows: 1fr;
+    overflow: hidden;
+    opacity: 1;
+}
+.project-reveal-inner {
+    padding-top: 10px;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    min-height: 0;
+}
+@media (hover: hover) and (pointer: fine) {
+    .project-reveal {
+        grid-template-rows: 0fr;
+        opacity: 0;
+        transition:
+            grid-template-rows 0.25s ease,
+            opacity 0.2s ease;
+    }
+    .project-card:hover .project-reveal,
+    .project-card:focus-within .project-reveal {
+        grid-template-rows: 1fr;
+        opacity: 1;
+    }
+}
+
 .project-tags {
     display: flex;
     gap: 8px;
@@ -627,28 +655,19 @@ section {
     padding: 3px 9px;
     border-radius: 5px;
 }
-.project-stats {
+.project-meta {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    flex-wrap: wrap;
     font-family: "JetBrains Mono", monospace;
-    font-size: 12.5px;
+    font-size: 12px;
     color: var(--text-dim);
-    text-align: right;
-    white-space: nowrap;
-    padding-top: 2px;
 }
-.project-stats a {
-    display: inline-block;
-    margin-top: 10px;
+.project-meta a {
     text-decoration: none;
     color: var(--pass-color);
     border-bottom: 1px solid currentColor;
-}
-@media (max-width: 640px) {
-    .project-card {
-        grid-template-columns: 1fr;
-    }
-    .project-stats {
-        text-align: left;
-    }
 }
 
 /* TALKS */

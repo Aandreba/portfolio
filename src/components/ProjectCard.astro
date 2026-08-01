@@ -28,22 +28,29 @@ const { project, stats } = Astro.props;
             }
         </div>
         <p class="project-desc">{project.description}</p>
-        <div class="project-tags mono">
-            {project.tags.map((tag) => <span>{tag}</span>)}
-        </div>
-    </div>
 
-    <div class="project-stats mono">
-        {stats}
-        {
-            project.href && (
-                <>
-                    <br />
-                    <a href={project.href} target="_blank" rel="noopener">
-                        View repo →
-                    </a>
-                </>
-            )
-        }
+        <div class="project-reveal">
+            <div class="project-reveal-inner">
+                <div class="project-tags mono">
+                    {project.tags.map((tag) => <span>{tag}</span>)}
+                </div>
+                {
+                    (stats || project.href) && (
+                        <div class="project-meta mono">
+                            {stats && <span>{stats}</span>}
+                            {project.href && (
+                                <a
+                                    href={project.href}
+                                    target="_blank"
+                                    rel="noopener"
+                                >
+                                    View repo →
+                                </a>
+                            )}
+                        </div>
+                    )
+                }
+            </div>
+        </div>
     </div>
 </div>
