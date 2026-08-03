@@ -1,0 +1,57 @@
+name: Deploy to GitHub Pages
+
+on:
+  push:
+    branches: [master]
+  # Scheduled runs only fire on the default branch. The daily rebuild exists so
+  # the GitHub star/fork counts baked into the page at build time stay current —
+  # see the note on caching in the build job below.
+  schedule:
+    - cron: "0 5 * * *"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+# Never cancel a deploy that's already publishing; queue behind it instead.
+concurrency:
+  group: pages
+  cancel-in-progress: false
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+
+      - run: npm ci
+
+      # Note: .cache/ is deliberately NOT restored between runs. getRepoStats()
+      # treats a cache entry as fresh for 24h, so a clean runner means every
+      # build refetches the counts — which is what makes the daily run useful.
+      - run: npm run build
+        env:
+          # Lifts the GitHub API limit from 60/hr (anonymous, shared per runner
+          # IP) to 1000/hr, so the star fetch isn't throttled in CI.
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: dist
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - id: deployment
+        uses: actions/deploy-pages@v4
