@@ -10,7 +10,9 @@ const { talk } = Astro.props;
 
 <div class="talk">
   {talk.photo && (
-    <img class="talk-photo" src={talk.photo} alt={talk.title} loading="lazy" />
+    <div class="talk-photo-wrap">
+      <img class="talk-photo" src={talk.photo} alt={talk.title} loading="lazy" />
+    </div>
   )}
   <div class="talk-body">
     <span class="talk-date mono">{talk.date} — {talk.place}</span>
