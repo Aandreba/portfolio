@@ -24,7 +24,12 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
+      # The images and videos in public/ are stored in Git LFS (.gitattributes).
+      # Without this, checkout fetches ~130-byte pointer stubs instead of the
+      # real files and the deployed site serves those stubs as the assets.
       - uses: actions/checkout@v4
+        with:
+          lfs: true
 
       - uses: actions/setup-node@v4
         with:
