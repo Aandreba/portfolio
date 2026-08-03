@@ -9,19 +9,24 @@ const { talk } = Astro.props;
 ---
 
 <div class="talk">
-  <span class="talk-date mono">{talk.date} — {talk.place}</span>
-  <h3 class="talk-title">{talk.title}</h3>
-  <div class="talk-venue mono">{talk.venue}</div>
-  <p class="talk-desc">{talk.description}</p>
-  <div class="talk-links">
-    {
-      talk.links.map((link) => (
-        <a
-          href={link.href}
-          target="_blank"
-          rel="noopener"
-        >{`${link.label} →`}</a>
-      ))
-    }
+  {talk.photo && (
+    <img class="talk-photo" src={talk.photo} alt={talk.title} loading="lazy" />
+  )}
+  <div class="talk-body">
+    <span class="talk-date mono">{talk.date} — {talk.place}</span>
+    <h3 class="talk-title">{talk.title}</h3>
+    <div class="talk-venue mono">{talk.venue}</div>
+    <p class="talk-desc">{talk.description}</p>
+    <div class="talk-links">
+      {
+        talk.links.map((link) => (
+          <a
+            href={link.href}
+            target="_blank"
+            rel="noopener"
+          >{`${link.label} →`}</a>
+        ))
+      }
+    </div>
   </div>
 </div>

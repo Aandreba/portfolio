@@ -5,6 +5,7 @@ export type Talk = {
     venue: string;
     description: string;
     links: { label: string; href: string }[];
+    photo?: string;
 };
 
 export const talks: Talk[] = [
@@ -25,6 +26,7 @@ export const talks: Talk[] = [
                 href: "https://www.linkedin.com/feed/update/urn:li:activity:7439036003501191169/",
             },
         ],
+        photo: "fosdem.jpeg",
     },
     {
         date: "JUNE 2024",
@@ -39,6 +41,7 @@ export const talks: Talk[] = [
                 href: "https://www.linkedin.com/feed/update/urn:li:activity:7333250214566297600/",
             },
         ],
+        photo: "osc.jpeg",
     },
     {
         date: "MAY 2024",
@@ -53,5 +56,6 @@ export const talks: Talk[] = [
                 href: "https://www.dorscluc.org/2024/05/talk-announcement-the-beauty-of-hardware-translation-by-alex-andreba/",
             },
         ],
+        photo: "dors.jpeg",
     },
 ];

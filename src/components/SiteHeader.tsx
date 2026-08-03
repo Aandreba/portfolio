@@ -53,6 +53,7 @@ export default function SiteHeader() {
                 >
                     LinkedIn
                 </a>
+                <a href="mailto:aandreba@gmail.com">Email me</a>
             </div>
         </header>
     );
